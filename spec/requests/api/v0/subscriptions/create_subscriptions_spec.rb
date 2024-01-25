@@ -17,7 +17,6 @@ RSpec.describe "Subscriptions Requests" do
       }
       
       post api_v0_subscriptions_path, params: params
-
       rb = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to be_successful

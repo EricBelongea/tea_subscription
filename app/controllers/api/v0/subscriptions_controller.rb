@@ -1,5 +1,6 @@
 class Api::V0::SubscriptionsController < ApplicationController
   before_action :find_customer, only: %i[ create ]
+  before_action :find_subscription, only: %i[ update ]
 
   # POST /api/v0/subscriptions
   def create
@@ -13,8 +14,11 @@ class Api::V0::SubscriptionsController < ApplicationController
 
   # PUT/PATCH /api/v0/subscriptions/:id
   def update  
-    require 'pry'; binding.pry
-
+    if @subscription.update(subscription_params)
+      render json: SubscriptionSerializer.new(@subscription)
+    else
+      render json: { status: 400, error: @subscription.errors.full_messages }, status: :bad_request
+    end
   end
 
   private
@@ -29,5 +33,13 @@ class Api::V0::SubscriptionsController < ApplicationController
 
   def subscription_params
     params.permit(:title, :status, :price, :frequency)
+  end
+
+  def find_subscription
+    if !params[:id]
+      render json: { error: "Can't find subscription", status: 400}, status: :bad_request
+    else
+      @subscription = Subscription.find(params[:id])
+    end
   end
 end
