@@ -138,7 +138,7 @@ RSpec.describe "Subscriptions Requests" do
       params = {
         title: "First Order",
         status: true,
-        price: "",
+        price: 5,
         frequency: 1
       }
     

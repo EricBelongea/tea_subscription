@@ -17,7 +17,7 @@ class Api::V0::SubscriptionsController < ApplicationController
     if @subscription.update(subscription_params)
       render json: SubscriptionSerializer.new(@subscription)
     else
-      render json: { status: 400, error: @subscription.errors.full_messages }, status: :bad_request
+      render json: { status: 400, error: @subscription.errors.full_messages.first }, status: :bad_request
     end
   end
 
@@ -36,10 +36,6 @@ class Api::V0::SubscriptionsController < ApplicationController
   end
 
   def find_subscription
-    if !params[:id]
-      render json: { error: "Can't find subscription", status: 400}, status: :bad_request
-    else
-      @subscription = Subscription.find(params[:id])
-    end
+    @subscription = Subscription.find(params[:id])
   end
 end

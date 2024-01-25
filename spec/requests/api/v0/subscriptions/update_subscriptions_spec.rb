@@ -59,4 +59,82 @@ RSpec.describe "Subscription Uopdate" do
       expect(updated_sub.status).to_not eq(@subscription.status)
     end
   end
+
+  describe '#sad-pathing' do
+    it 'Missing title' do
+      params = {
+        title: "",
+        status: true,
+        price: 5,
+        frequency: 1,
+        user_id: @customer.id
+      }
+    
+      patch api_v0_subscription_path(@subscription), params: params
+      rb = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+
+      expect(rb[:error]).to eq("Title can't be blank")
+      expect(rb[:status]).to eq(400)
+    end
+
+    it 'Missing status' do
+      params = {
+        title: "First Order",
+        status: "",
+        price: 5,
+        frequency: 1,
+        user_id: @customer.id
+      }
+    
+      patch api_v0_subscription_path(@subscription), params: params
+      rb = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+
+      expect(rb[:error]).to eq("Status is not included in the list")
+      expect(rb[:status]).to eq(400)
+    end
+
+    it 'Missing price' do
+      params = {
+        title: "First Order",
+        status: true,
+        price: "",
+        frequency: 1,
+        user_id: @customer.id
+      }
+    
+      patch api_v0_subscription_path(@subscription), params: params
+      rb = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+
+      expect(rb[:error]).to eq("Price is not a number")
+      expect(rb[:status]).to eq(400)
+    end
+
+    it 'Missing frequency' do
+      params = {
+        title: "First Order",
+        status: true,
+        price: 4,
+        frequency: "",
+        user_id: @customer.id
+      }
+    
+      patch api_v0_subscription_path(@subscription), params: params
+      rb = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+
+      expect(rb[:error]).to eq("Frequency is not a number")
+      expect(rb[:status]).to eq(400)
+    end
+  end
 end
