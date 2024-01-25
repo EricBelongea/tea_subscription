@@ -6,15 +6,18 @@ class Api::V0::SubscriptionsController < ApplicationController
     if subscription.save
       render json: SubscriptionSerializer.new(subscription), status: :created
     else
-      require 'pry'; binding.pry
-      render json: { error: subscription.errors.full_messages }, status: :bad_request
+      render json: { error: subscription.errors.full_messages.first, status: 400 }, status: :bad_request
     end
   end
 
   private
 
   def find_customer
-    @customer = Customer.find(params[:user_id])
+    if !params[:user_id]
+      render json: { error: "You must login or create an account", status: 400}, status: :bad_request
+    else
+      @customer = Customer.find(params[:user_id])
+    end
   end
 
   def subscription_params
