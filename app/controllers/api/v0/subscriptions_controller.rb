@@ -24,7 +24,6 @@ class Api::V0::SubscriptionsController < ApplicationController
   # GET /api/v0/customers/:customer_id/subscriptions/:subscriptions_id
   def show
     customer = Customer.find(params[:customer_id])
-    # require 'pry'; binding.pry
     if customer
       render json: SubscriptionSerializer.new(customer.subscriptions)
     else
