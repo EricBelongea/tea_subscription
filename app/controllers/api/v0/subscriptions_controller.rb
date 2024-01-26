@@ -21,8 +21,8 @@ class Api::V0::SubscriptionsController < ApplicationController
     end
   end
 
-  # GET /api/v0/customers/:customer_id/subscriptions/:subscriptions_id
-  def show
+  # GET /api/v0/customers/:customer_id/subscriptions
+  def index
     customer = Customer.find(params[:customer_id])
     if customer
       render json: SubscriptionSerializer.new(customer.subscriptions)

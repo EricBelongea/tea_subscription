@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v0 do
       resources :subscriptions, only: [:create, :update]
       resources :customers, only: [:index] do
-        resources :subscriptions, only: :show
+        resources :subscriptions, only: :index
       end
     end
   end

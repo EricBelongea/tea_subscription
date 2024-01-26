@@ -19,7 +19,7 @@ RSpec.describe "Customer Subscriptions Show" do
 
   describe '#Happy-Pathing' do
     it 'Shows a customers One active subscription' do
-      get api_v0_customer_subscription_path(@customer, @subscription)
+      get api_v0_customer_subscriptions_path(@customer)
       rb = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to be_successful
@@ -53,7 +53,7 @@ RSpec.describe "Customer Subscriptions Show" do
       
       post api_v0_subscriptions_path, params: params
 
-      get api_v0_customer_subscription_path(@customer, @subscription)
+      get api_v0_customer_subscriptions_path(@customer)
       rb = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to be_successful
@@ -107,12 +107,12 @@ RSpec.describe "Customer Subscriptions Show" do
       
       post api_v0_subscriptions_path, params: params2
 
-      get api_v0_customer_subscription_path(@customer, @subscription)
+      get api_v0_customer_subscriptions_path(@customer)
       rb = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to be_successful
       expect(response.status).to eq(200)
-      
+
       expect(rb[:data].count).to eq(4)
 
       rb[:data].each do |subscription|
