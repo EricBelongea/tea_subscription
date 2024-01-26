@@ -21,6 +21,17 @@ class Api::V0::SubscriptionsController < ApplicationController
     end
   end
 
+  # GET /api/v0/customers/:customer_id/subscriptions/:subscriptions_id
+  def show
+    customer = Customer.find(params[:customer_id])
+    # require 'pry'; binding.pry
+    if customer
+      render json: SubscriptionSerializer.new(customer.subscriptions)
+    else
+      render json: { status: 404, error: customer.errors.full_messages }, status: :not_found
+    end
+  end
+
   private
 
   def find_customer
