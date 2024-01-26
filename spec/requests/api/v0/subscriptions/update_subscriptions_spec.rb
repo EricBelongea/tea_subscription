@@ -8,7 +8,7 @@ RSpec.describe "Subscription Uopdate" do
         status: true,
         price: 5,
         frequency: 1,
-        user_id: @customer.id
+        customer_id: @customer.id
       }
       
       post api_v0_subscriptions_path, params: params
@@ -24,7 +24,7 @@ RSpec.describe "Subscription Uopdate" do
         status: false,
         price: 5,
         frequency: 1,
-        user_id: @customer.id
+        customer_id: @customer.id
       }
 
       patch api_v0_subscription_path(@subscription), params: params
@@ -67,7 +67,7 @@ RSpec.describe "Subscription Uopdate" do
         status: true,
         price: 5,
         frequency: 1,
-        user_id: @customer.id
+        customer_id: @customer.id
       }
     
       patch api_v0_subscription_path(@subscription), params: params
@@ -86,7 +86,7 @@ RSpec.describe "Subscription Uopdate" do
         status: "",
         price: 5,
         frequency: 1,
-        user_id: @customer.id
+        customer_id: @customer.id
       }
     
       patch api_v0_subscription_path(@subscription), params: params
@@ -105,7 +105,7 @@ RSpec.describe "Subscription Uopdate" do
         status: true,
         price: "",
         frequency: 1,
-        user_id: @customer.id
+        customer_id: @customer.id
       }
     
       patch api_v0_subscription_path(@subscription), params: params
@@ -124,7 +124,7 @@ RSpec.describe "Subscription Uopdate" do
         status: true,
         price: 4,
         frequency: "",
-        user_id: @customer.id
+        customer_id: @customer.id
       }
     
       patch api_v0_subscription_path(@subscription), params: params

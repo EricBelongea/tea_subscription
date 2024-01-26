@@ -1,5 +1,5 @@
 class Api::V0::SubscriptionsController < ApplicationController
-  before_action :find_customer, only: %i[ create ]
+  before_action :find_customer, only: %i[ create index ]
   before_action :find_subscription, only: %i[ update ]
 
   # POST /api/v0/subscriptions
@@ -23,21 +23,20 @@ class Api::V0::SubscriptionsController < ApplicationController
 
   # GET /api/v0/customers/:customer_id/subscriptions
   def index
-    customer = Customer.find(params[:customer_id])
-    if customer
-      render json: SubscriptionSerializer.new(customer.subscriptions)
+    if @customer
+      render json: SubscriptionSerializer.new(@customer.subscriptions)
     else
-      render json: { status: 404, error: customer.errors.full_messages }, status: :not_found
+      render json: { status: 404, error: @customer.errors.full_messages }, status: :not_found
     end
   end
 
   private
 
   def find_customer
-    if !params[:user_id]
+    if !params[:customer_id]
       render json: { error: "You must login or create an account", status: 400}, status: :bad_request
     else
-      @customer = Customer.find(params[:user_id])
+      @customer = Customer.find(params[:customer_id])
     end
   end
 

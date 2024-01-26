@@ -8,12 +8,12 @@ RSpec.describe "Customer Subscriptions Show" do
       status: true,
       price: 5,
       frequency: 1,
-      user_id: @customer.id
+      customer_id: @customer.id
     }
     
     post api_v0_subscriptions_path, params: params
     rb = JSON.parse(response.body, symbolize_names: true)
-
+    
     @subscription = Subscription.find(rb[:data][:id])
   end
 
@@ -48,7 +48,7 @@ RSpec.describe "Customer Subscriptions Show" do
         status: true,
         price: 7,
         frequency: 3,
-        user_id: @customer.id
+        customer_id: @customer.id
       }
       
       post api_v0_subscriptions_path, params: params
@@ -82,7 +82,7 @@ RSpec.describe "Customer Subscriptions Show" do
         status: true,
         price: 7,
         frequency: 3,
-        user_id: @customer.id
+        customer_id: @customer.id
       }
       
       post api_v0_subscriptions_path, params: params
@@ -92,7 +92,7 @@ RSpec.describe "Customer Subscriptions Show" do
         status: false,
         price: 7,
         frequency: 10,
-        user_id: @customer.id
+        customer_id: @customer.id
       }
       
       post api_v0_subscriptions_path, params: params1
@@ -102,7 +102,7 @@ RSpec.describe "Customer Subscriptions Show" do
         status: false,
         price: 2,
         frequency: 4,
-        user_id: @customer.id
+        customer_id: @customer.id
       }
       
       post api_v0_subscriptions_path, params: params2
