@@ -1,4 +1,5 @@
 class Api::V0::SubscriptionsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found_response
   before_action :find_customer, only: %i[ create index ]
   before_action :find_subscription, only: %i[ update ]
 
@@ -46,5 +47,9 @@ class Api::V0::SubscriptionsController < ApplicationController
 
   def find_subscription
     @subscription = Subscription.find(params[:id])
+  end
+
+  def not_found_response(exception)
+    render json: ErrorSerializer.new(ErrorMessage.new(exception.message, 404)), status: :not_found
   end
 end

@@ -130,4 +130,19 @@ RSpec.describe "Customer Subscriptions Show" do
       end
     end
   end
+
+  describe '#sad-pathing' do
+    it 'Not a Customer ID' do
+      get api_v0_customer_subscriptions_path(666999666)
+      rb = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
+      expect(rb).to have_key(:error_object)
+      expect(rb[:error_object]).to have_key(:message)
+      expect(rb[:error_object][:message]).to eq("Couldn't find Customer with 'id'=666999666")
+      expect(rb[:error_object]).to have_key(:status)
+      expect(rb[:error_object][:status]).to eq(404)
+    end
+  end
 end
