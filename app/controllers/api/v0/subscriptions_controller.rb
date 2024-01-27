@@ -24,11 +24,7 @@ class Api::V0::SubscriptionsController < ApplicationController
 
   # GET /api/v0/customers/:customer_id/subscriptions
   def index
-    if @customer
-      render json: SubscriptionSerializer.new(@customer.subscriptions)
-    else
-      render json: { status: 404, error: @customer.errors.full_messages }, status: :not_found
-    end
+    render json: SubscriptionSerializer.new(@customer.subscriptions)
   end
 
   private
